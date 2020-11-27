@@ -9,7 +9,7 @@ router.get("/", (req, res, next) => {
   console.log(`In another the middlewware`);
   console.log(`Request from ${req.url}`);
   const products = adminData.products;
-  res.render("shop", { prods: products, docTitle: "Shop" });
+  res.render("shop", { prods: products, docTitle: "Shop", path: "/" });
 });
 
 module.exports = router;
