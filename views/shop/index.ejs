@@ -13,13 +13,13 @@
           </header>
           <div class="card__image">
             <img
-              src="https://ashmagautam.files.wordpress.com/2013/11/mcj038257400001.jpg"
-              alt="A Book"
+              src="<%= product.imageUrl %>"
+              alt="<%= product.title %>"
             />
           </div>
           <div class="card__content">
-            <h2 class="product__price">£123</h2>
-            <p class="product__description">Producto</p>
+            <h2 class="product__price">£<%= product.price %></h2>
+            <p class="product__description"><%= product.description %></p>
           </div>
           <div class="card__actions">
             <button class="btn">Add to cart</button>
