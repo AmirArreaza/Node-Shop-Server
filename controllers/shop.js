@@ -17,8 +17,12 @@ exports.getProductById = (req, res, next) => {
   console.log(`Looking for ${prodId} Product`);
   Product.findById(prodId, (product) => {
     console.log("-> ", product);
+    res.render("shop/product-detail", {
+      pageTitle: "Product Detail",
+      product: product,
+      path: "/products",
+    });
   });
-  res.redirect("/");
 };
 
 exports.getIndex = (req, res, next) => {
