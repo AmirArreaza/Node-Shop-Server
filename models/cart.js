@@ -31,21 +31,30 @@ module.exports = class Cart {
     });
   }
 
-  static deleteProduct(id, productPrice){
+  static deleteProduct(id, productPrice) {
     fs.readFile(c, (err, fileContent) => {
-      if(err) return;
+      if (err) return;
 
       const cart = JSON.parse(fileContent);
-      const updatedCart = {...cart};
-      const product = updatedCart.products.find(prod => prod.id === id);
+      const updatedCart = { ...cart };
+      const product = updatedCart.products.find((prod) => prod.id === id);
       const productQty = product.qty;
 
-      updatedCart.products = updatedCart.products.filter(prod => prod.id !== id);
+      updatedCart.products = updatedCart.products.filter(
+        (prod) => prod.id !== id
+      );
       updatedCart.totalPrice = productPrice - productPrice * productQty;
 
       fs.writeFile(c, JSON.stringify(updatedCart), (err) => {
         console.log(err);
       });
+    });
+  }
+
+  static getCart(cb) {
+    fs.readFile(c, (err, fileContent) => {
+      const cart = JSON.parse(fileContent);
+      (err) ? cb(null) : cb(cart);
     });
   }
 };
