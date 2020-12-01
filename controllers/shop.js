@@ -5,7 +5,7 @@ exports.getProducts = (req, res, next) => {
     res.render("shop/product-list", {
       prods: products,
       pageTitle: "All Products",
-      path: "/products"
+      path: "/products",
     });
   });
   console.log(`In another the middlewware`);
@@ -15,35 +15,38 @@ exports.getProducts = (req, res, next) => {
 exports.getProductById = (req, res, next) => {
   const prodId = req.params.productId;
   console.log(`Looking for ${prodId} Product`);
-  res.redirect('/')
+  Product.findById(prodId, (product) => {
+    console.log("-> ", product);
+  });
+  res.redirect("/");
 };
 
-exports.getIndex = (req,res,next) => {
+exports.getIndex = (req, res, next) => {
   Product.fetchAll((products) => {
     res.render("shop/index", {
       prods: products,
       pageTitle: "Shop",
-      path: "/"
+      path: "/",
     });
   });
-}
+};
 
 exports.getCart = (req, res, next) => {
-  res.render('shop/cart', {
-    pageTitle: 'Your Cart',
-    path: '/cart',
+  res.render("shop/cart", {
+    pageTitle: "Your Cart",
+    path: "/cart",
   });
-}
+};
 exports.getOrders = (req, res, next) => {
-  res.render('shop/orders', {
-    pageTitle: 'Your Orders',
-    path: '/orders',
+  res.render("shop/orders", {
+    pageTitle: "Your Orders",
+    path: "/orders",
   });
-}
+};
 
 exports.getCheckout = (req, res, next) => {
-  res.render('shop/checkout', {
-    pageTitle: 'Your Checkout',
-    path: 'checkout',
+  res.render("shop/checkout", {
+    pageTitle: "Your Checkout",
+    path: "checkout",
   });
-}
+};
