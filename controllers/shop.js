@@ -64,6 +64,16 @@ exports.addToCart = (req, res, next) => {
   res.redirect("/");
 };
 
+exports.postCartDeleteItem = (req, res) => {
+  const prodId = req.body.productId;
+  console.log("Removing", prodId);
+  Product.findById(prodId, product => {
+    console.log("Removing", product);
+    Cart.deleteProduct(prodId, product.price);
+    res.redirect('/cart');
+  });
+}
+
 exports.getOrders = (req, res, next) => {
   res.render("shop/orders", {
     pageTitle: "Your Orders",
