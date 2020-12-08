@@ -4,10 +4,10 @@ const Cart = require("../models/cart");
 exports.getProducts = (req, res, next) => {
   console.log(`In another the middlewware`);
   console.log(`Request from ${req.url}`);
-  Product.fetchAll()
-    .then(([rows]) => {
+  Product.findAll({})
+    .then((products) => {
       res.render("shop/product-list", {
-        prods: rows,
+        prods: products,
         pageTitle: "All Products",
         path: "/products",
       });
@@ -34,10 +34,10 @@ exports.getProductById = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll()
-    .then(([rows, fieldData]) => {
+  Product.findAll({})
+    .then((products) => {
       res.render("shop/index", {
-        prods: rows,
+        prods: products,
         pageTitle: "Shop Index",
         path: "/",
       });
