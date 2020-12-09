@@ -47,8 +47,8 @@ Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
 
 sequelize
-  .sync({ force: true })//To Override the tables all the time
-  //.sync()
+  //.sync({ force: true })//To Override the tables all the time
+  .sync()
   .then((result) => {
     return User.findByPk(1);
   })
@@ -60,6 +60,9 @@ sequelize
   })
   .then((user) => {
     console.log(user);
+    return user.createCart();
+  })
+  .then((cart) => {
     app.listen(3000);
   })
   .catch((err) => {
