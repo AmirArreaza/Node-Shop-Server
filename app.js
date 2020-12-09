@@ -60,7 +60,9 @@ sequelize
   })
   .then((user) => {
     console.log(user);
-    return user.createCart();
+    if(!user.cart){
+      return user.createCart();
+    }
   })
   .then((cart) => {
     app.listen(3000);
