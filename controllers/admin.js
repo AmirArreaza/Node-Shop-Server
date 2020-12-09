@@ -15,13 +15,9 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  req.user
-    .createProduct({
-      title: title,
-      price: price,
-      imageUrl: imageUrl,
-      description: description,
-    })
+  const newProduct = new Product(title, price, description, imageUrl);
+  newProduct
+    .save()
     .then((result) => {
       console.log("Product created!");
       res.redirect("/admin/products");
@@ -30,6 +26,8 @@ exports.postAddProduct = (req, res, next) => {
       console.log(err);
     });
 };
+
+/*
 
 exports.getEditProduct = (req, res, next) => {
   console.log(`Add-Product Controller`);
@@ -85,13 +83,6 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  /*
-  Product.destroy({
-    where: {
-      id: prodId,
-    },
-  });
-  */
   Product.findByPk(prodId)
     .then((product) => {
       product.destroy();
@@ -118,3 +109,4 @@ exports.getProducts = (req, res, next) => {
       console.log(err);
     });
 };
+*/

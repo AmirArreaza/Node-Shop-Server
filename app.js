@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
   console.log("Adding Dummy User to the request");
+  next();
 });
 
 app.use("/admin", adminRoutes);
