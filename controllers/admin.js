@@ -15,15 +15,16 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  Product.create({
-    title: title,
-    price: price,
-    imageUrl: imageUrl,
-    description: description,
-  })
+  req.user
+    .createProduct({
+      title: title,
+      price: price,
+      imageUrl: imageUrl,
+      description: description,
+    })
     .then((result) => {
       console.log("Product created!");
-      res.redirect('/admin/products');
+      res.redirect("/admin/products");
     })
     .catch((err) => {
       console.log(err);
@@ -91,7 +92,7 @@ exports.postDeleteProduct = (req, res, next) => {
   Product.findByPk(prodId)
     .then((product) => {
       product.destroy();
-      console.log('Product removed');
+      console.log("Product removed");
       res.redirect("/admin/products");
     })
     .catch((err) => {
