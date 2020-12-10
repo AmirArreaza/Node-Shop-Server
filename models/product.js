@@ -1,3 +1,4 @@
+const mongodb = require('mongodb');
 const getDB = require("../util/database").getDB;
 
 class Product {
@@ -22,12 +23,25 @@ class Product {
     return db
       .collection("products")
       .find()
-      .toArray()//For only a few documents, otherwise use pagination
+      .toArray() //For only a few documents, otherwise use pagination
       .then((products) => {
         console.log(products);
         return products;
       })
-      .catch((err) => console.log(err)); 
+      .catch((err) => console.log(err));
+  }
+
+  static findById(prodId) {
+    const db = getDB();
+    return db
+      .collection("products")
+      .find({ _id: new mongodb.ObjectId(prodId) })
+      .next()
+      .then((product) => {
+        console.log(product);
+        return product;
+      })
+      .catch((err) => console.log(err));
   }
 }
 
