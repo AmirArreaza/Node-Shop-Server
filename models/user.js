@@ -25,12 +25,26 @@ class User {
   }
 
   addToCart(product) {
-    /*
-    const cartProduct = this.cart.items.findIndex((cp) => {
-      return cp._id === product._id;
+    const cartProductIndex = this.cart.items.findIndex((cp) => {
+      return cp.productId.toString() === product._id.toString();
     });
-    */
-    const updatedCart = { items: [{ productId: product._id, quantity: 1 }] };
+
+    let calculatedQuantity;
+    const updatedCartItems = [...this.cart.items];
+
+    if (cartProductIndex >= 0) {
+      calculatedQuantity = this.cart.items[cartProductIndex].quantity + 1;
+      updatedCartItems[cartProductIndex].quantity = calculatedQuantity;
+    } else {
+      updatedCartItems.push({
+        productId: product._id,
+        quantity: 1,
+      });
+    }
+
+    const updatedCart = {
+      items: updatedCartItems,
+    };
     const db = getDB();
     return db
       .collection("users")
