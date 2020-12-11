@@ -22,7 +22,7 @@ app.use((req, res, next) => {
   console.log("Adding Dummy User to the request");
   User.findById("5fd360ef98b0d195a738319a")
     .then((user) => {
-      req.user = user;
+      req.user = new User(user.name, user.email, user._id, user.cart);
       next();
     })
     .catch((err) => console.log(err));
@@ -33,6 +33,5 @@ app.use(shopRoutes);
 app.use(errorController.get404);
 
 mongoConnect(() => {
-
   app.listen(3000);
 });
