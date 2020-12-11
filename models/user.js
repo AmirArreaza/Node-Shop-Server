@@ -2,13 +2,14 @@ const mongodb = require("mongodb");
 const getDB = require("../util/database").getDB;
 
 class User {
-  constructor(username, email, id){
+  constructor(username, email, id, cart) {
     this._id = id ? new mongodb.ObjectId(id) : null;
     this.name = username;
-    this.email = email
+    this.email = email;
+    this.cart = cart; // { items: []}
   }
 
-  save(){
+  save() {
     const db = getDB();
     let dbOp;
     if (this._id) {
@@ -21,6 +22,22 @@ class User {
     return dbOp
       .then((result) => console.log(result))
       .catch((err) => console.log(err));
+  }
+
+  addToCart(product) {
+    /*
+    const cartProduct = this.cart.items.findIndex((cp) => {
+      return cp._id === product._id;
+    });
+    */
+    const updatedCart = { items: [{ ...product, quantity: 1 }] };
+    const db = getDB();
+    return db
+      .collection("users")
+      .updateOne(
+        { _id: new mongodb.ObjectId(this._id) },
+        { $set: { cart: updatedCart } }
+      );
   }
 
   static fetchAll() {
@@ -58,7 +75,6 @@ class User {
       })
       .catch((err) => console.log(err));
   }
-
 }
 
 module.exports = User;
