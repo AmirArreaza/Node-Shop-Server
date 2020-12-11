@@ -10,6 +10,8 @@ const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
 const mongoConnect = require("./util/database").mongoConnect;
 
+const User = require("./models/user");
+
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -18,7 +20,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
   console.log("Adding Dummy User to the request");
-  next();
+  User.findById("5fd360ef98b0d195a738319a")
+    .then((user) => {
+      req.user = user;
+      next();
+    })
+    .catch((err) => console.log(err));
 });
 
 app.use("/admin", adminRoutes);
@@ -26,5 +33,6 @@ app.use(shopRoutes);
 app.use(errorController.get404);
 
 mongoConnect(() => {
+
   app.listen(3000);
 });
