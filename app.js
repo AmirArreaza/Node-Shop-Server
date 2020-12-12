@@ -24,7 +24,6 @@ app.use((req, res, next) => {
     .then((user) => {
       console.log('User Found!');
       req.user = user;
-      console.log(req.user);
       next();
     })
     .catch((err) => console.log(err));
@@ -39,7 +38,7 @@ mongoose
     "mongodb+srv://AArreaza:Mon19861707@cluster0.1f6cb.mongodb.net/Shop?retryWrites=true&w=majority"
   )
   .then((result) => {
-    console.log(result);
+    console.log('Connected');
     User.findOne().then((user) => {
       if (!user) {
         const user = new User({
