@@ -1,5 +1,4 @@
-const mongodb = require("mongodb");
-const getDB = require("../util/database").getDB;
+
 
 class Product {
   constructor(title, price, description, imageUrl, id, userId) {
@@ -11,6 +10,7 @@ class Product {
     this.userId = userId;
   }
 
+  /*
   save() {
     const db = getDB();
     let dbOp;
@@ -62,6 +62,7 @@ class Product {
       })
       .catch((err) => console.log(err));
   }
+  /*
 }
 
 module.exports = Product;

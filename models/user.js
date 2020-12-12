@@ -1,6 +1,3 @@
-const mongodb = require("mongodb");
-const { findById } = require("./product");
-const getDB = require("../util/database").getDB;
 
 class User {
   constructor(username, email, id, cart) {
@@ -9,7 +6,7 @@ class User {
     this.email = email;
     this.cart = cart; // { items: []}
   }
-
+/*
   save() {
     const db = getDB();
     let dbOp;
@@ -156,6 +153,6 @@ class User {
       })
       .catch((err) => console.log(err));
   }
+  */
 }
-
 module.exports = User;
