@@ -10,7 +10,7 @@ const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
 const mongoose = require("mongoose");
 
-//const User = require("./models/user");
+const User = require("./models/user");
 
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -19,14 +19,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
-  /*console.log("Adding Dummy User to the request");
-  User.findById("5fd360ef98b0d195a738319a")
+  console.log("Adding Dummy User to the request");
+  User.findById("5fd51a527aca0c48f44c611b")
     .then((user) => {
-      req.user = new User(user.name, user.email, user._id, user.cart);
+      req.user = user;
+      next();
     })
     .catch((err) => console.log(err));
-    */
-   next();
 });
 
 app.use("/admin", adminRoutes);
@@ -39,6 +38,18 @@ mongoose
   )
   .then((result) => {
     console.log(result);
+    User.findOne().then((user) => {
+      if (!user) {
+        const user = new User({
+          name: "Amir",
+          email: "amir@gmail.com",
+          cart: {
+            items: [],
+          },
+        });
+        user.save();
+      }
+    });
     app.listen(3000);
   })
   .catch((err) => console.log(err));
