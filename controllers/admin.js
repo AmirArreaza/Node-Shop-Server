@@ -95,6 +95,7 @@ exports.postDeleteProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
+    .populate('userId', 'name')
     .then((products) => {
       console.log("Products");
       console.log(products);
