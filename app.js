@@ -20,9 +20,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
   console.log("Adding Dummy User to the request");
-  User.findById("5fd51a527aca0c48f44c611b")
+  User.findById("5fd51aef088e454b5cd9a64c")
     .then((user) => {
+      console.log('User Found!');
       req.user = user;
+      console.log(req.user);
       next();
     })
     .catch((err) => console.log(err));
